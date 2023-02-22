@@ -1,47 +1,49 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
+<script setup></script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <h1 class="title">Vite Pinia todoList</h1>
+  <div class="wrap">
+    <div class="input-area">
+      <input type="text" />
+      <button>新增</button>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <ul class="todo-list">
+      <li>
+        <input type="checkbox" />
+        <span>aaaaaaa</span>
+        <a href="#">X</a>
+      </li>
+    </ul>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<style scoped lang="scss">
+h1 {
+  padding: 2rem 0;
+  text-align: center;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
+.wrap {
+  div.input-area {
     display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    justify-content: center;
+    margin: 0 auto 1rem;
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  ul.todo-list {
+    width: 500px;
+    margin: 0 auto;
+    padding-left: 0;
+    li {
+      border-bottom: 1px solid #fa0;
+      list-style: none;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-around;
+      a {
+        text-decoration: none;
+        color: #f77;
+      }
+    }
   }
 }
 </style>
