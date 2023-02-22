@@ -1,17 +1,36 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import { useTodoStore } from "./stores/myTodo";
+const todoStore = useTodoStore();
+const inputTodo = ref("");
+
+function addTodo() {
+  todoStore.todoList.push({
+    id: new Date().getTime(),
+    content: inputTodo.value,
+    complete: false,
+  });
+  inputTodo.value = "";
+  localStorage.setItem("myTodo", JSON.stringify(todoStore.todoList));
+}
+</script>
 
 <template>
   <h1 class="title">Vite Pinia todoList</h1>
   <div class="wrap">
     <div class="input-area">
-      <input type="text" />
-      <button>新增</button>
+      <input type="text" v-model="inputTodo" @keyup.enter="addTodo" />
+      <button @click="addTodo">新增</button>
     </div>
     <ul class="todo-list">
-      <li>
-        <input type="checkbox" />
-        <span>aaaaaaa</span>
-        <a href="#">X</a>
+      <li v-for="item in todoStore.todoList" :key="item.id">
+        <input
+          type="checkbox"
+          :checked="item.complete"
+          @change="todoStore.changeStatus(item.id)"
+        />
+        <span>{{ item.content }}</span>
+        <a href="#" @click.prevent="todoStore.deleteTodo(item.id)">X</a>
       </li>
     </ul>
   </div>
@@ -33,11 +52,19 @@ h1 {
     width: 500px;
     margin: 0 auto;
     padding-left: 0;
+    @media (max-width: 500px) {
+      width: 90%;
+    }
     li {
       border-bottom: 1px solid #fa0;
       list-style: none;
       padding: 1rem;
       display: flex;
+      input[type="checkbox"] {
+        &:checked ~ span {
+          text-decoration: line-through #f77;
+        }
+      }
       justify-content: space-around;
       a {
         text-decoration: none;
